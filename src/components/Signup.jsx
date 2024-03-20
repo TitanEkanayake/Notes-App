@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import notesImage from "../assets/note.png";
 
 export const Signup = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -80,7 +83,7 @@ export const Signup = () => {
                 name="password"
                 type="password"
                 autoComplete="current-password"
-                // value={email}
+                value={email}
                 // onChange={(e) => setEmail(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                 placeholder="Type your password"
@@ -102,7 +105,7 @@ export const Signup = () => {
         <p className="mt-5 text-center text-sm text-gray-500">
           Already a member?{" "}
           <a
-            href="#"
+            href="/Login"
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >
             Login

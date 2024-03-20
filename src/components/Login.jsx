@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import notesImage from "../assets/note.png";
 const Login = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -85,7 +90,7 @@ const Login = () => {
         <p className="mt-7 text-center text-sm text-gray-500">
           Not a member?{" "}
           <a
-            href="#"
+            href="/Signup"
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >
             Signup
