@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";
-import { Signup } from "./components/Signup";
+import Signup from "./components/Signup";
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/Home" element={<Home />} />
       </Routes>
     </div>
   );

@@ -1,10 +1,32 @@
 import React, { useState } from "react";
 import notesImage from "../assets/note.png";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-export const Signup = () => {
+const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const URL = import.meta.env.VITE_ENDPOINTURL;
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await axios.post(`${URL}/users/signup`, {
+        name,
+        email,
+        password,
+      });
+      alert("User Registered successfully.");
+      navigate("/Login");
+    } catch (error) {
+      alert("", error.message);
+    }
+  };
+
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -15,7 +37,7 @@ export const Signup = () => {
         />
         <h2 className="mt-10 text-center font-extrabold text-5xl md:text-5xl lg:text-5xl  leading-9 tracking-tight text-gray-900">
           Lets get you{" "}
-          <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
             Signed up
           </span>
         </h2>
@@ -37,8 +59,8 @@ export const Signup = () => {
                 type="name"
                 name="name"
                 id="name"
-                // value={name}
-                // onChange={(e) => setname(e.target.value)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                 placeholder="Enter Your Name"
                 required
@@ -59,8 +81,8 @@ export const Signup = () => {
                 type="email"
                 name="email"
                 id="email"
-                // value={name}
-                // onChange={(e) => setname(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                 placeholder="Enter Your E-Mail"
                 required
@@ -83,8 +105,8 @@ export const Signup = () => {
                 name="password"
                 type="password"
                 autoComplete="current-password"
-                value={email}
-                // onChange={(e) => setEmail(e.target.value)}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                 placeholder="Type your password"
                 required
@@ -95,6 +117,7 @@ export const Signup = () => {
           <div>
             <button
               type="submit"
+              onClick={handleSignup}
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Sign up
@@ -115,3 +138,5 @@ export const Signup = () => {
     </div>
   );
 };
+
+export default Signup;
