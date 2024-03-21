@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import notesImage from "../assets/note.png";
-import EditPopup from "./EditPopup";
+import EditPopup from "./Effects/EditPopup";
 
 const Home = () => {
   const [notes, setNotes] = useState([]);
