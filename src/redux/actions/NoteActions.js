@@ -23,7 +23,7 @@ export const fetchNotes = (UserID) => async (dispatch) => {
   dispatch({ type: FETCH_NOTES_REQUEST });
   try {
     const notes = await fetchNotesFromAPI(UserID);
-    console.log(note);
+    console.log(notes);
     dispatch({
       type: FETCH_NOTES_SUCCESS,
       payload: notes,

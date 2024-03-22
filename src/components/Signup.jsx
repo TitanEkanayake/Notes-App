@@ -12,25 +12,28 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error, user } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    if (error) {
-      toast.error(`Signup unsuccessful`);
-    }
-    if (user) {
-      toast.success("Signup successful! Redirecting to login...");
-      setTimeout(() => navigate("/"), 3000); // Redirect after 3 seconds
-    }
-  }, [error, user, navigate]);
+  const { loading, error, user, needsLogin } = useSelector(
+    (state) => state.user
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(signupUser({ name, email, password }));
   };
+  console.log(needsLogin);
+  useEffect(() => {
+    if (user) {
+      toast.success("Signup successful! Redirecting to login...");
+      setTimeout(() => navigate("/"), 3000); // Redirect after 3 seconds
+    }
+    if (error) {
+      toast.error(`Signup unsuccessful : ${error}`);
+    }
+  }, [error, user]);
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+      <ToastContainer />
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-24 w-auto"
@@ -126,17 +129,7 @@ const Signup = () => {
             </button>
           </div>
         </form>
-        <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
+
         <p className="mt-5 text-center text-sm text-gray-500">
           Already a member?{" "}
           <a

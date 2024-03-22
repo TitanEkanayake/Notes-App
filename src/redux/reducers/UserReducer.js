@@ -12,6 +12,7 @@ const initialState = {
   user: null,
   loading: false,
   error: null,
+  needsLogin: false, // Add needsLogin to initial state
 };
 
 const userReducer = (state = initialState, action) => {
@@ -27,6 +28,7 @@ const userReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         user: action.payload,
+        needsLogin: true, // Set needsLogin to true after successful signup
       };
     case SIGNUP_FAILURE:
       return {
@@ -45,6 +47,7 @@ const userReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         user: action.payload,
+        needsLogin: false, // Reset needsLogin to false after successful login
       };
     case LOGIN_FAILURE:
       return {
@@ -54,8 +57,7 @@ const userReducer = (state = initialState, action) => {
       };
     case LOGOUT:
       return {
-        ...state,
-        user: null,
+        ...initialState, // Ensure the flag is reset on logout
       };
     default:
       return state;

@@ -18,10 +18,8 @@ export const signupUser = (user) => {
     try {
       const data = await signupUserService(user);
       if (data.status == "400") {
-        alert(data.message);
-        return dispatch({ type: SIGNUP_FAILURE, payload: error.message });
+        return dispatch({ type: SIGNUP_FAILURE, payload: data.message });
       } else {
-        console.log(data);
         dispatch({ type: SIGNUP_SUCCESS, payload: data });
       }
     } catch (error) {
@@ -35,10 +33,11 @@ export const loginUser = (credentials) => {
     dispatch({ type: LOGIN_REQUEST });
     try {
       const data = await loginUserService(credentials);
-      if (data.success) {
-        dispatch({ type: LOGIN_SUCCESS, payload: data.user });
-      } else {
+      if (data.status == "400") {
         dispatch({ type: LOGIN_FAILURE, payload: data.message });
+      } else {
+        console.log(data);
+        dispatch({ type: LOGIN_SUCCESS, payload: data.user });
       }
     } catch (error) {
       dispatch({ type: LOGIN_FAILURE, payload: error.message });
