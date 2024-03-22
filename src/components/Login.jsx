@@ -22,7 +22,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user && !needsLogin) {
-      toast.success("Login successful ! Redirecting to login...");
+      toast.success("Login successful ! Redirecting to Home page...");
       setTimeout(() => navigate("/Home"), 2000); // Redirect to the dashboard  or home  page after 3 seconds
     }
     if (error) {
