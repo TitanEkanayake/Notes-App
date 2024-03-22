@@ -45,7 +45,7 @@ export const loginUser = (credentials) => {
 };
 
 export const logoutUser = () => {
-  return {
-    type: LOGOUT,
+  return (dispatch) => {
+    dispatch({ type: LOGOUT });
   };
 };

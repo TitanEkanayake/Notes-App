@@ -5,9 +5,12 @@ const EditPopup = ({ note, onSave, onCancel }) => {
   const [description, setDescription] = useState(note.description);
 
   const handleSave = () => {
-    onSave({ title, description });
-    setTitle("");
-    setDescription("");
+    const updatedNote = {
+      id: note._id,
+      name: title,
+      description: description,
+    };
+    onSave(updatedNote);
   };
 
   return (

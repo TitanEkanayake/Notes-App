@@ -22,8 +22,8 @@ const Login = () => {
 
   useEffect(() => {
     if (user && !needsLogin) {
-      toast.success("Login successful! Redirecting to login...");
-      setTimeout(() => navigate("/Home"), 3000); // Redirect to the dashboard  or home  page after 3 seconds
+      toast.success("Login successful ! Redirecting to login...");
+      setTimeout(() => navigate("/Home"), 2000); // Redirect to the dashboard  or home  page after 3 seconds
     }
     if (error) {
       toast.error(`Login unsuccessful: ${error}`);

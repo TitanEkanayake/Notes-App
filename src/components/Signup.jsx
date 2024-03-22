@@ -21,7 +21,7 @@ const Signup = () => {
 
   useEffect(() => {
     if (user) {
-      toast.success("Signup successful! Redirecting to login...");
+      toast.success("Signup successful ! Redirecting to login...");
       setTimeout(() => navigate("/"), 3000); // Redirect after 3 seconds
     }
     if (error) {

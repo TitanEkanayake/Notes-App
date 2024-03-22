@@ -1,60 +1,96 @@
-import React, { useState } from "react";
-import notesImage from "../assets/note.png";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  fetchNotes,
+  addNote,
+  updateNote,
+  deleteNote,
+} from "../redux/actions/NoteActions";
 import EditPopup from "./Effects/EditPopup";
+import notesImage from "../assets/note.png";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import LoadingAnimation from "./Effects/Loading";
+import { useNavigate } from "react-router-dom";
+import { logoutUser } from "../redux/actions/UserActions";
 
 const Home = () => {
-  const [notes, setNotes] = useState([]);
+  const dispatch = useDispatch();
+  const { notes, loading, error } = useSelector((state) => state.notes);
+  const { user } = useSelector((state) => state.user);
+  const [addNoteTitle, setAddNoteTitle] = useState("");
+  const [addNoteDescription, setAddNoteDescription] = useState("");
   const [noteTitle, setNoteTitle] = useState("");
   const [noteDescription, setNoteDescription] = useState("");
-  const [user, setUser] = useState("John Doe");
   const [editing, setEditing] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
+  const navigate = useNavigate();
+  // Fetch notes when the component mounts
 
-  const addNote = () => {
-    if (noteTitle && noteDescription) {
-      const newNote = { title: noteTitle, description: noteDescription };
-      setNotes([...notes, newNote]);
-      setNoteTitle("");
-      setNoteDescription("");
+  const handleAddNote = () => {
+    if (addNoteTitle && addNoteDescription) {
+      const newNote = {
+        name: addNoteTitle,
+        description: addNoteDescription,
+        userId: user[0]._id,
+      };
+      dispatch(addNote(newNote));
+      setAddNoteTitle("");
+      setAddNoteDescription("");
     }
   };
 
-  const deleteNote = (index) => {
-    const newNotes = [...notes];
-    newNotes.splice(index, 1);
-    setNotes(newNotes);
-  };
-
-  const editNote = (index) => {
+  const handleEditNote = (index) => {
     setEditIndex(index);
-    setNoteTitle(notes[index].title);
+    setNoteTitle(notes[index].name);
     setNoteDescription(notes[index].description);
     setEditing(true);
   };
 
-  const updateNote = (updatedNote) => {
-    const updatedNotes = [...notes];
-    updatedNotes[editIndex] = updatedNote;
-    setNotes(updatedNotes);
+  const handleUpdateNote = (updatedNote) => {
+    const Note = {
+      id: notes[editIndex]._id,
+      name: updatedNote.name,
+      description: updatedNote.description,
+    };
+    dispatch(updateNote(Note));
     setEditing(false);
+    setEditIndex(null);
   };
 
-  const cancelEdit = () => {
+  const handleDeleteNote = (noteId) => {
+    dispatch(deleteNote(noteId));
+  };
+
+  const handleCancelEdit = () => {
     setEditing(false);
     setEditIndex(null);
   };
 
   const logout = () => {
-    console.log("Logged out");
+    toast.warning("Logging out !");
+    // setTimeout(() => navigate("/"), 2000);
+    setTimeout(() => {
+      dispatch(logoutUser());
+      navigate("/");
+    }, 2000);
   };
+
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchNotes(user[0]._id));
+    }
+  }, [dispatch, user]);
 
   return (
     <div className="container mx-auto p-4">
+      {loading && <LoadingAnimation />}
+      <ToastContainer />
       {editing && (
         <EditPopup
           note={notes[editIndex]}
-          onSave={updateNote}
-          onCancel={cancelEdit}
+          onSave={handleUpdateNote}
+          onCancel={handleCancelEdit}
         />
       )}
       <div className="sm:mx-auto sm:w-full sm:max-w-sm pb-5">
@@ -72,55 +108,67 @@ const Home = () => {
       </div>
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h2 className="text-2xl font-bold">Hello, {user}!</h2>
+          <h2 className="text-2xl font-serif ">Hello, {user[0].name}!</h2>
         </div>
         <div>
           <button
             onClick={logout}
-            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full"
           >
             Logout
           </button>
         </div>
       </div>
-      <div className="mb-4">
+      <form className="mb-4">
         <input
           type="text"
           placeholder="Note Title"
+          required
           className="shadow appearance-none border rounded-lg w-full py-2 px-3 mb-4 text-grey-darker"
-          value={noteTitle}
-          onChange={(e) => setNoteTitle(e.target.value)}
+          value={addNoteTitle}
+          onChange={(e) => setAddNoteTitle(e.target.value)}
         />
         <textarea
           placeholder="Note Description"
+          requiredquired
           className="shadow appearance-none border rounded-lg w-full py-2 px-3 mb-4 text-grey-darker"
-          value={noteDescription}
-          onChange={(e) => setNoteDescription(e.target.value)}
+          value={addNoteDescription}
+          onChange={(e) => setAddNoteDescription(e.target.value)}
         />
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-          onClick={addNote}
+          type="submit"
+          className="bg-indigo-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+          disabled={loading}
+          onClick={handleAddNote}
         >
           Add Note
         </button>
-      </div>
+      </form>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {notes.map((note, index) => (
-          <div key={index} className="border rounded p-4 shadow-lg">
-            <h3 className="text-lg font-bold">{note.title}</h3>
-            <p className="text-grey-darker">{note.description}</p>
-            <button
-              className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded mr-2"
-              onClick={() => editNote(index)}
-            >
-              Edit
-            </button>
-            <button
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-              onClick={() => deleteNote(index)}
-            >
-              Delete
-            </button>
+          <div
+            key={index}
+            className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-gradient-to-b from-blue-100"
+          >
+            <div className="px-6 py-4">
+              <h3 className="font-bold text-xl mb-2">{note.name}</h3>
+              <p className="text-gray-700 text-base">{note.description}</p>
+            </div>
+            <div className="px-6 pt-4 pb-2">
+              <button
+                className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-5 mx-2 rounded-full"
+                onClick={() => handleEditNote(index)}
+              >
+                Edit
+              </button>
+              <button
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-5 mx-2 rounded-full"
+                onClick={() => handleDeleteNote(note._id)}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         ))}
       </div>
