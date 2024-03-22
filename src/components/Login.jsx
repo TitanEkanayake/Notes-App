@@ -19,7 +19,7 @@ const Login = () => {
     e.preventDefault();
     dispatch(loginUser({ email, password }));
   };
-  console.log(needsLogin);
+
   useEffect(() => {
     if (user && !needsLogin) {
       toast.success("Login successful! Redirecting to login...");

@@ -12,15 +12,13 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error, user, needsLogin } = useSelector(
-    (state) => state.user
-  );
+  const { loading, error, user } = useSelector((state) => state.user);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(signupUser({ name, email, password }));
   };
-  console.log(needsLogin);
+
   useEffect(() => {
     if (user) {
       toast.success("Signup successful! Redirecting to login...");

@@ -36,7 +36,6 @@ export const loginUser = (credentials) => {
       if (data.status == "400") {
         dispatch({ type: LOGIN_FAILURE, payload: data.message });
       } else {
-        console.log(data);
         dispatch({ type: LOGIN_SUCCESS, payload: data.user });
       }
     } catch (error) {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const EditPopup = ({ note, onSave, onCancel }) => {
-  const [title, setTitle] = useState(note.title);
+  const [title, setTitle] = useState(note.name);
   const [description, setDescription] = useState(note.description);
 
   const handleSave = () => {
