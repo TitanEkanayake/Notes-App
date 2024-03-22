@@ -17,7 +17,13 @@ export const signupUser = (user) => {
     dispatch({ type: SIGNUP_REQUEST });
     try {
       const data = await signupUserService(user);
-      dispatch({ type: SIGNUP_SUCCESS, payload: data });
+      if (data.status == "400") {
+        alert(data.message);
+        return dispatch({ type: SIGNUP_FAILURE, payload: error.message });
+      } else {
+        console.log(data);
+        dispatch({ type: SIGNUP_SUCCESS, payload: data });
+      }
     } catch (error) {
       dispatch({ type: SIGNUP_FAILURE, payload: error.message });
     }
