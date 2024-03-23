@@ -2,6 +2,12 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_REQUEST_SUCCESS,
+  FORGOT_PASSWORD_REQUEST_FAILURE,
+  FORGOT_PASSWORD_CHANGE_REQUEST,
+  FORGOT_PASSWORD_CHANGE_SUCCESS,
+  FORGOT_PASSWORD_CHANGE_FAILURE,
   LOGOUT,
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
@@ -12,7 +18,7 @@ const initialState = {
   user: null,
   loading: false,
   error: null,
-  needsLogin: false, // Add needsLogin to initial state
+  needsLogin: false,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -50,6 +56,42 @@ const userReducer = (state = initialState, action) => {
         needsLogin: false, // Reset needsLogin to false after successful login
       };
     case LOGIN_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case FORGOT_PASSWORD_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case FORGOT_PASSWORD_REQUEST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        user: action.payload,
+      };
+    case FORGOT_PASSWORD_REQUEST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case FORGOT_PASSWORD_CHANGE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case FORGOT_PASSWORD_CHANGE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
+    case FORGOT_PASSWORD_CHANGE_FAILURE:
       return {
         ...state,
         loading: false,

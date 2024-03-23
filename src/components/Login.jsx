@@ -1,38 +1,48 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loginUser } from "../redux/actions/UserActions"; // Adjust the import path as necessary
 import notesImage from "../assets/note.png";
+import ForgetPasswordPopup from "./Effects/ForgetPasswordPopup";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showForgetPasswordPopup, setShowForgetPasswordPopup] = useState(false); // State to manage popup visibility
   const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.user);
   const navigate = useNavigate();
-  const { loading, error, user, needsLogin } = useSelector(
-    (state) => state.user
-  );
+
+  const handleForgetPassword = () => {
+    setShowForgetPasswordPopup(true);
+  };
+
+  const toggleForgetPasswordPopup = () => {
+    setShowForgetPasswordPopup(!showForgetPasswordPopup);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginUser({ email, password }));
+    dispatch(loginUser({ email, password })).then((res) => {
+      if (res && res.status == "200") {
+        toast.success("Login successful ! Redirecting to Home page...");
+        setTimeout(() => navigate("/Home"), 2000);
+      } else {
+        toast.error(
+          `Login Failed : ${res.message}` || "Login Failed check the console"
+        );
+      }
+    });
   };
-
-  useEffect(() => {
-    if (user && !needsLogin) {
-      toast.success("Login successful ! Redirecting to Home page...");
-      setTimeout(() => navigate("/Home"), 2000); // Redirect to the dashboard  or home  page after 3 seconds
-    }
-    if (error) {
-      toast.error(`Login unsuccessful: ${error}`);
-    }
-  }, [error, user]);
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <ToastContainer />
+      {showForgetPasswordPopup && (
+        <ForgetPasswordPopup onClose={toggleForgetPasswordPopup} />
+      )}
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-24 w-auto"
@@ -94,7 +104,7 @@ const Login = () => {
             </div>
             <div className="text-sm pt-1">
               <a
-                href="#"
+                onClick={handleForgetPassword}
                 className="font-semibold text-indigo-600 hover:text-indigo-500"
               >
                 Forgot password?
@@ -108,6 +118,7 @@ const Login = () => {
               disabled={loading}
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
+              {/* Log In */}
               {loading ? "Processing..." : "Login In"}
             </button>
           </div>
