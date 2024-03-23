@@ -130,7 +130,7 @@ const Home = () => {
         />
         <textarea
           placeholder="Note Description"
-          requiredquired
+          required
           className="shadow appearance-none border rounded-lg w-full py-2 px-3 mb-4 text-grey-darker"
           value={addNoteDescription}
           onChange={(e) => setAddNoteDescription(e.target.value)}
