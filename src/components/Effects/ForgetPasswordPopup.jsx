@@ -17,7 +17,7 @@ const ForgetPasswordPopup = ({ onClose }) => {
     e.preventDefault();
     dispatch(forgetPassword({ email })).then((res) => {
       if (res && res.status == "200") {
-        toast.success(" A Token has sent to your main Please check !");
+        toast.success(" A Token has sent to your mail Please check !");
         setTimeout(() => setStep(2), 1000);
       } else {
         toast.error(res.message);
@@ -31,7 +31,7 @@ const ForgetPasswordPopup = ({ onClose }) => {
         toast.success("Password has been reset successfully");
         setTimeout(() => {
           onClose();
-        }, 3000);
+        }, 1000);
       } else {
         toast.error(res.message);
       }

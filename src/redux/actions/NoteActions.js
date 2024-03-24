@@ -84,6 +84,7 @@ export const updateNote = (note) => async (dispatch) => {
         payload: res.message,
       });
     }
+    return res;
   } catch (error) {
     toast.error(`API Error Failed to update the note: ${res.message}`);
     dispatch({
@@ -98,20 +99,18 @@ export const deleteNote = (noteId) => async (dispatch) => {
   try {
     const res = await deleteNoteFromAPI(noteId);
     if (res.status == "200") {
-      toast.success("Note successfully deleted !");
       dispatch({
         type: DELETE_NOTE_SUCCESS,
         payload: noteId,
       });
     } else {
-      toast.error(`Failed to add the note: ${res.message}`);
       dispatch({
         type: DELETE_NOTE_FAILURE,
         payload: res.message,
       });
     }
+    return res;
   } catch (error) {
-    toast.error(`API Error Failed to add the note: ${error.message}`);
     dispatch({
       type: DELETE_NOTE_FAILURE,
       payload: error.message,

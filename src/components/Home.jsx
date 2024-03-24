@@ -52,7 +52,15 @@ const Home = () => {
       name: updatedNote.name,
       description: updatedNote.description,
     };
-    dispatch(updateNote(Note));
+    dispatch(updateNote(Note)).then((res) => {
+      if (res.status == "200") {
+        toast.success("Note Updated Successfully");
+        setEditing(false);
+        setEditIndex(null);
+      } else {
+        toast.error(`Error: ${res.message}`);
+      }
+    });
     setEditing(false);
     setEditIndex(null);
   };
@@ -63,7 +71,13 @@ const Home = () => {
   };
 
   const handleDeleteNote = (noteId) => {
-    dispatch(deleteNote(noteId));
+    dispatch(deleteNote(noteId)).then((res) => {
+      if (res.status == "200") {
+        toast.success("Note Deleted Successfully");
+      } else {
+        toast.error(`Error: ${res.message}`);
+      }
+    });
   };
 
   const logout = () => {

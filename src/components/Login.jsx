@@ -31,9 +31,8 @@ const Login = () => {
         Redirecting to Home page...`);
         setTimeout(() => navigate("/Home"), 2000);
       } else {
-        toast.error(
-          `Login Failed : ${res.message}` || "Login Failed check the console"
-        );
+        console.log("inside the failed login");
+        toast.error(`Login Failed : ${res.message}`);
       }
     });
   };

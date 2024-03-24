@@ -37,7 +37,6 @@ export const forgetPassword = async (data) => {
 };
 
 export const resetPassword = async (data) => {
-  console.log(data);
   try {
     const response = await axios.post(`${URL}/users/reset-password`, data);
     return response.data;
