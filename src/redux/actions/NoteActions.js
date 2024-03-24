@@ -60,8 +60,8 @@ export const addNote = (note) => async (dispatch) => {
         payload: res.message,
       });
     }
+    return res;
   } catch (error) {
-    toast.error(`API Error Failed to add the note: ${error.message}`);
     dispatch({
       type: ADD_NOTE_FAILURE,
       payload: error.message,
@@ -86,7 +86,6 @@ export const updateNote = (note) => async (dispatch) => {
     }
     return res;
   } catch (error) {
-    toast.error(`API Error Failed to update the note: ${res.message}`);
     dispatch({
       type: UPDATE_NOTE_FAILURE,
       payload: error.message,

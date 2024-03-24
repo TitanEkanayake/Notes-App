@@ -33,9 +33,15 @@ const Home = () => {
         description: addNoteDescription,
         userId: user[0]._id,
       };
-      dispatch(addNote(newNote));
-      setAddNoteTitle("");
-      setAddNoteDescription("");
+      dispatch(addNote(newNote)).then((res) => {
+        if (res.status == "201") {
+          toast.success(`Note added successfully`);
+          setAddNoteTitle("");
+          setAddNoteDescription("");
+        } else {
+          toast.error(`Cannot add the note: ${res.message}`);
+        }
+      });
     }
   };
 
