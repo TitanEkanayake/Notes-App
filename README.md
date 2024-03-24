@@ -1,8 +1,27 @@
-# React + Vite
+# Notes App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## About
+This is a full-stack Notes application designed to create, manage, and store your notes efficiently. The front-end is built with React and Redux for state management, styled with Tailwind CSS for a responsive design. The back-end is powered by a Node-Express API, with MongoDB as the database.
 
-Currently, two official plugins are available:
+## Live Demo
+- Notes App
+- Node API
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Repositories
+- Notes App Repository
+- Node-Express-MongoDB API Repository
+
+## Features
+- Create, read, update, and delete notes
+- Organize notes with tags
+- Search functionality for quick access
+- User authentication and authorization
+- Responsive design for various screen sizes
+
+## Technologies Used
+- **Front-End:** React, Redux, Tailwind CSS
+- **Back-End:** Node.js, Express.js
+- **Database:** MongoDB
+
+## Setup and Installation
+1. Clone the repositories:
