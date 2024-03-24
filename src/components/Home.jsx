@@ -16,7 +16,7 @@ import { logoutUser } from "../redux/actions/UserActions";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { notes, loading, error } = useSelector((state) => state.notes);
+  const { notes, loading } = useSelector((state) => state.notes);
   const { user } = useSelector((state) => state.user);
   const [addNoteTitle, setAddNoteTitle] = useState("");
   const [addNoteDescription, setAddNoteDescription] = useState("");
@@ -25,7 +25,6 @@ const Home = () => {
   const [editing, setEditing] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const navigate = useNavigate();
-  // Fetch notes when the component mounts
 
   const handleAddNote = () => {
     if (addNoteTitle && addNoteDescription) {
@@ -58,18 +57,17 @@ const Home = () => {
     setEditIndex(null);
   };
 
-  const handleDeleteNote = (noteId) => {
-    dispatch(deleteNote(noteId));
-  };
-
   const handleCancelEdit = () => {
     setEditing(false);
     setEditIndex(null);
   };
 
+  const handleDeleteNote = (noteId) => {
+    dispatch(deleteNote(noteId));
+  };
+
   const logout = () => {
     toast.warning("Logging out !");
-    // setTimeout(() => navigate("/"), 2000);
     setTimeout(() => {
       dispatch(logoutUser());
       navigate("/");
@@ -108,7 +106,9 @@ const Home = () => {
       </div>
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h2 className="text-2xl font-serif ">Hello, {user[0].name}!</h2>
+          <h2 className="text-2xl font-serif ">
+            Hello, {user ? user[0].name : ""} !
+          </h2>
         </div>
         <div>
           <button

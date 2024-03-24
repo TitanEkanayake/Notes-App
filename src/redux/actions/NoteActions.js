@@ -24,21 +24,20 @@ import { toast } from "react-toastify";
 export const fetchNotes = (UserID) => async (dispatch) => {
   dispatch({ type: FETCH_NOTES_REQUEST });
   try {
-    const userNotes = await fetchNotesFromAPI(UserID);
-    if (userNotes.status == "200") {
+    const res = await fetchNotesFromAPI(UserID);
+    if (res.status == "200") {
       dispatch({
         type: FETCH_NOTES_SUCCESS,
-        payload: userNotes.notes,
+        payload: res.notes,
       });
     } else {
-      toast.error(`Failed to load user notes: ${userNotes.message}`);
       dispatch({
         type: FETCH_NOTES_FAILURE,
-        payload: userNotes.message,
+        payload: res.message,
       });
     }
   } catch (error) {
-    toast.error(`Failed to load user notes: ${error.messagee}`);
+    toast.error(`API Error Failed to load user notes: ${error.messagee}`);
     dispatch({
       type: FETCH_NOTES_FAILURE,
       payload: error.message,
@@ -49,22 +48,20 @@ export const fetchNotes = (UserID) => async (dispatch) => {
 export const addNote = (note) => async (dispatch) => {
   dispatch({ type: ADD_NOTE_REQUEST });
   try {
-    const newNote = await addNoteToAPI(note);
-    if (newNote.status == "201") {
-      toast.success("Note successfully added");
+    const res = await addNoteToAPI(note);
+    if (res.status == "201") {
       dispatch({
         type: ADD_NOTE_SUCCESS,
-        payload: newNote.note,
+        payload: res.note,
       });
-    } else if (newNote.status == "400") {
-      toast.error(`Failed to add the note: ${newNote.message}`);
+    } else if (res.status == "400") {
       dispatch({
         type: ADD_NOTE_FAILURE,
-        payload: newNote.message,
+        payload: res.message,
       });
     }
   } catch (error) {
-    toast.error(`Failed to add the note: ${error.message}`);
+    toast.error(`API Error Failed to add the note: ${error.message}`);
     dispatch({
       type: ADD_NOTE_FAILURE,
       payload: error.message,
@@ -75,21 +72,20 @@ export const addNote = (note) => async (dispatch) => {
 export const updateNote = (note) => async (dispatch) => {
   dispatch({ type: UPDATE_NOTE_REQUEST });
   try {
-    const updatedNote = await updateNoteToAPI(note);
-    if (updatedNote.status == "200") {
-      toast.success("Note successfully updated !");
+    const res = await updateNoteToAPI(note);
+    if (res.status == "200") {
       dispatch({
         type: UPDATE_NOTE_SUCCESS,
-        payload: updatedNote.note,
+        payload: res.note,
       });
     } else {
-      toast.error(`Failed to add the note: ${updatedNote.message}`);
       dispatch({
         type: UPDATE_NOTE_FAILURE,
-        payload: updatedNote.message,
+        payload: res.message,
       });
     }
   } catch (error) {
+    toast.error(`API Error Failed to update the note: ${res.message}`);
     dispatch({
       type: UPDATE_NOTE_FAILURE,
       payload: error.message,
@@ -100,22 +96,22 @@ export const updateNote = (note) => async (dispatch) => {
 export const deleteNote = (noteId) => async (dispatch) => {
   dispatch({ type: DELETE_NOTE_REQUEST });
   try {
-    const deletedNote = await deleteNoteFromAPI(noteId);
-    if (deletedNote.status == "200") {
+    const res = await deleteNoteFromAPI(noteId);
+    if (res.status == "200") {
       toast.success("Note successfully deleted !");
       dispatch({
         type: DELETE_NOTE_SUCCESS,
         payload: noteId,
       });
     } else {
-      toast.error(`Failed to add the note: ${deletedNote.message}`);
+      toast.error(`Failed to add the note: ${res.message}`);
       dispatch({
         type: DELETE_NOTE_FAILURE,
-        payload: deletedNote.message,
+        payload: res.message,
       });
     }
   } catch (error) {
-    toast.error(`Failed to add the note: ${error.message}`);
+    toast.error(`API Error Failed to add the note: ${error.message}`);
     dispatch({
       type: DELETE_NOTE_FAILURE,
       payload: error.message,
