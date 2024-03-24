@@ -12,22 +12,19 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error, user } = useSelector((state) => state.user);
+  const { loading } = useSelector((state) => state.user);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signupUser({ name, email, password }));
+    dispatch(signupUser({ name, email, password })).then((res) => {
+      if (res && res.status == "201") {
+        toast.success("Signup successful");
+        setTimeout(() => navigate("/"), 2000);
+      } else {
+        toast.error(`Signup Unsuccessful :${res.message}`);
+      }
+    });
   };
-
-  useEffect(() => {
-    if (user) {
-      toast.success("Signup successful ! Redirecting to login...");
-      setTimeout(() => navigate("/"), 3000); // Redirect after 3 seconds
-    }
-    if (error) {
-      toast.error(`Signup unsuccessful : ${error}`);
-    }
-  }, [error, user]);
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">

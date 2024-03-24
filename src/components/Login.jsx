@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { loginUser } from "../redux/actions/UserActions"; // Adjust the import path as necessary
+import { loginUser } from "../redux/actions/UserActions";
 import notesImage from "../assets/note.png";
 import ForgetPasswordPopup from "./Effects/ForgetPasswordPopup";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showForgetPasswordPopup, setShowForgetPasswordPopup] = useState(false); // State to manage popup visibility
+  const [showForgetPasswordPopup, setShowForgetPasswordPopup] = useState(false);
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -27,7 +27,8 @@ const Login = () => {
     e.preventDefault();
     dispatch(loginUser({ email, password })).then((res) => {
       if (res && res.status == "200") {
-        toast.success("Login successful ! Redirecting to Home page...");
+        toast.success(`Login successful ! 
+        Redirecting to Home page...`);
         setTimeout(() => navigate("/Home"), 2000);
       } else {
         toast.error(
@@ -118,8 +119,7 @@ const Login = () => {
               disabled={loading}
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              {/* Log In */}
-              {loading ? "Processing..." : "Login In"}
+              {loading ? "Processing..." : "Login"}
             </button>
           </div>
         </form>

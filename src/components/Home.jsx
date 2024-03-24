@@ -80,7 +80,12 @@ const Home = () => {
     }
   }, [dispatch, user]);
 
-  return (
+  return user === null ? (
+    <div className="text-center py-10">
+      <h2 className="text-2xl font-semibold mb-2">No user found</h2>
+      <p className="text-md">Please login to continue.</p>
+    </div>
+  ) : (
     <div className="container mx-auto p-4">
       {loading && <LoadingAnimation />}
       <ToastContainer />

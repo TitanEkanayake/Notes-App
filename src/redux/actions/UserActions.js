@@ -20,17 +20,17 @@ import {
   LOGOUT,
 } from "./ActionTypes";
 
-// Async action creator for signing up a user
 export const signupUser = (data) => {
   return async (dispatch) => {
     dispatch({ type: SIGNUP_REQUEST });
     try {
       const res = await signupUserService(data);
-      if (res.status == "400") {
-        return dispatch({ type: SIGNUP_FAILURE, payload: res.message });
-      } else {
+      if (res.status == "201") {
         dispatch({ type: SIGNUP_SUCCESS, payload: res.user });
+      } else {
+        dispatch({ type: SIGNUP_FAILURE, payload: res.message });
       }
+      return res;
     } catch (error) {
       dispatch({ type: SIGNUP_FAILURE, payload: error.message });
     }
