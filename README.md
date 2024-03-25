@@ -57,9 +57,10 @@ To run the application locally, follow these steps:
 
 Once the application is running, you can perform the following actions:
 
-- Create a new note by clicking on the "New Note" button and filling out the title and description fields.
-- View all created notes on the home screen.
-- Click on a note to view its details, edit, or delete it.
+- First you have to signup and login to the application.If you don't remeber the password there is a forget password option.
+- Create a new note by filling out the title and description fields and pressing add note.
+- You can see created notes on the home screen.
+- There is edit, or delete button on every note.
 - Edit a note by clicking the "Edit" button and making changes to the title or description.
 - Delete a note by clicking the "Delete" button.
 
