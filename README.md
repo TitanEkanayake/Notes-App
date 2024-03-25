@@ -48,7 +48,7 @@ To run the application locally, follow these steps:
 4. Start the development server:
 
    ```bash
-   npm start
+   npm run dev
    ```
 
 5. Access the application in your web browser at `http://localhost:3000`.
