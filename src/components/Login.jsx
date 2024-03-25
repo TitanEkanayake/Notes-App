@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,14 +11,14 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showForgetPasswordPopup, setShowForgetPasswordPopup] = useState(false);
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  // const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
-  const togglePasswordVisibility = () => {
-    setIsPasswordVisible(!isPasswordVisible);
-  };
+  // const togglePasswordVisibility = () => {
+  //   setIsPasswordVisible(!isPasswordVisible);
+  // };
 
   const handleForgetPassword = () => {
     setShowForgetPasswordPopup(true);
@@ -94,24 +94,25 @@ const Login = () => {
                 Password
               </label>
             </div>
-            <div className="mt-2 relative">
+            <div className="mt-2 ">
               <input
                 id="password"
                 name="password"
-                type={isPasswordVisible ? "text" : "password"}
+                // type={isPasswordVisible ? "text" : "password"}
+                type="password"
                 autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 pr-12"
+                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                 placeholder="Type your password"
                 required
               />
-              <div
-                onClick={togglePasswordVisibility}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 cursor-pointer"
-              >
-                {isPasswordVisible ? "Hide" : "Show"}
-              </div>
+              {/* <div
+                  onClick={togglePasswordVisibility}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 cursor-pointer"
+                >
+                  {isPasswordVisible ? "Hide" : "Show"}
+                </div> */}
             </div>
             <div className="text-sm pt-1">
               <a
