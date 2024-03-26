@@ -38,27 +38,27 @@ To run the application locally, follow these steps:
    ```bash
    cd Notes-App
    ```
-3.Set up environment variables:
-
+3. Set up environment variables:
+   
 Create a .env file in the root directory and add the following variables:
 
    ```bash
    VITE_ENDPOINTURL= Enter the URL for the API.
    ```
 
-4. Install dependencies:
+5. Install dependencies:
 
    ```bash
    npm install
    ```
 
-5. Start the development server:
+6. Start the development server:
 
    ```bash
    npm run dev
    ```
 
-6. Access the application in your web browser at `http://localhost:5173/`.
+7. Access the application in your web browser at `http://localhost:5173/`.
 
 ## Usage
 
