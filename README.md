@@ -39,11 +39,12 @@ To run the application locally, follow these steps:
    cd Notes-App
    ```
 3.Set up environment variables:
+
 Create a .env file in the root directory and add the following variables:
 
- ```bash
-  VITE_ENDPOINTURL= Enter the URL for the API.
- ```
+   ```bash
+   VITE_ENDPOINTURL= Enter the URL for the API.
+   ```
 
 4. Install dependencies:
 
