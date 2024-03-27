@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import axios from "axios";
 
 const URL = import.meta.env.VITE_ENDPOINTURL;
@@ -46,4 +47,20 @@ export const resetPassword = async (data) => {
         "An error occurred during reset password."
     );
   }
+};
+
+export const checkServerStatus = () => {
+  useEffect(() => {
+    const intervalId = setInterval(async () => {
+      try {
+        await axios.get(`${URL}/users/active`);
+        console.log("Server is active");
+      } catch (error) {
+        console.error("Error checking server status:", error);
+      }
+    }, 600000); // 10 minutes in milliseconds
+
+    // Clear interval on component unmount to avoid memory leaks
+    return () => clearInterval(intervalId);
+  }, []);
 };

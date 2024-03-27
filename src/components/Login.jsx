@@ -6,8 +6,10 @@ import { loginUser } from "../redux/actions/UserActions";
 import notesImage from "../assets/note.png";
 import ForgetPasswordPopup from "./Effects/ForgetPasswordPopup";
 import { useNavigate } from "react-router-dom";
+import { checkServerStatus } from "../redux/services/userServices";
 
 const Login = () => {
+  checkServerStatus();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showForgetPasswordPopup, setShowForgetPasswordPopup] = useState(false);
